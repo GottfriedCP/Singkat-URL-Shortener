@@ -1,0 +1,53 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+{% block body_b %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Singkat</h1>
+        <p class="lead">Singkat can shorten any URL using your own unique keyword.</p>
+        <hr class="my-4">
+        <p>You can track each click and get useful, non-private information.</p>
+        <p class="lead">
+            {% if not request.user.is_authenticated %}
+            <a class="btn btn-primary btn-lg" href="{% url 'singkat:register' %}" role="button">Register</a><br>
+            <small>Already have an account? <a href="{% url 'singkat:login' %}">Login</a></small>
+            {% else %}
+            <a class="btn btn-primary btn-lg" href="{% url 'singkat:client-area' %}" role="button">Client Area</a><br>
+            <small>or create a new Singkat URL <a href="{% url 'singkat:create-new' %}">now</a>.</small>
+            {% endif %}
+            <br><small>You can also shorten using random keyword via form below.</small>
+        </p>
+    </div>
+</div>
+<div class="container p-3" id="generate-anonymous-singkat">
+    <h2>Don't need keyword?</h2>
+    <p>Just paste long URL here and get Singkat URL with random keyword</p>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <p class="text-success">New Singkat created: <input type="text" value="{{ message }}" id="singkat-result" readonly> <button type="button" class="btn btn-light btn-sm" onclick="copySingkat()">Copy</button></p>
+                <script>
+                    document.getElementById("singkat-result").scrollIntoView();
+                    function copySingkat() {
+                        var copyText = document.getElementById("singkat-result");
+                        copyText.select();
+                        document.execCommand("copy");
+                    }
+                </script>
+            {% else %}
+                <p class="text-danger">Error(s) occured: {{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'singkat:create-new-random' %}" method="POST">
+        <!-- Form error should appear below this comment. -->
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="ori-id" class="sr-only">Target URL</label>
+            <input name="target_url" type="text" class="form-control" id="ori-id" placeholder="Paste complete URL here e.g. http://www.foo.dev/bar/foobar/" maxlength="1000" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+</div>
+{% endblock %}

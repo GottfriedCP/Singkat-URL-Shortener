@@ -1,0 +1,27 @@
+nav {
+    margin-bottom: 30px;
+}
+
+span.navbar-text {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+form.form-center {
+    max-width: 420px;
+    /*padding-top: 5%;*/
+}
+
+input#singkat-result {
+    border: 0px;
+    padding: 0px;
+}
+
+div#user-command-buttons {
+    margin-top: 3%;
+    margin-bottom: 1%;
+}

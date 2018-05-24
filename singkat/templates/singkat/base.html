@@ -1,0 +1,85 @@
+<!DOCTYPE html> {% load staticfiles %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous"> 
+    <!-- Other css -->
+    <link rel="stylesheet" href="{% static 'singkat/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'singkat/css/element.css' %}">
+    {% block head_b %}{% endblock %}
+    <title>{% block title_b %}Home{% endblock %} | Singkat</title>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'singkat:home' %}">Singkat</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if request.session.curr_page == 'home' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'singkat:home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+                <!--li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form-->
+            {% if request.user.is_authenticated %}
+                <span class="navbar-text">Hello, {{ request.user.username|upper }}</span>
+                <a href="{% url 'singkat:client-area' %}" class="btn btn-sm btn-light mr-2" role="button">Client Area</a>
+                <a href="{% url 'singkat:logout' %}" class="btn btn-sm btn-light" role="button">Logout</a>
+            {% else %}
+                <a href="{% url 'singkat:register' %}" class="btn btn-sm btn-light mr-2" role="button">Register</a>
+                <a href="{% url 'singkat:login' %}" class="btn btn-sm btn-light" role="button">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% block body_b %} {% endblock %}
+
+    <footer id="main-footer" class="text-center">
+        <div class="container-fluid">
+            <p>Singkat by GP</p>
+            <small>A showcase for a research.</small>
+        </div>
+    </footer>
+    <!-- Optional JavaScript -->
+    {% block add_body_b %} {% endblock %}
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

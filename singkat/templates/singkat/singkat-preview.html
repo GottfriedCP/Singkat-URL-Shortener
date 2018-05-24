@@ -1,0 +1,14 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+
+{% block title_b %}URL Preview{% endblock %}
+{% block body_b %}
+<div class="container">
+    <small class="text-muted">Created at {{ singkat.created_at|date:"d M Y, H:i:s" }}</small>
+    <h2><strong>{{ singkat.title }}</strong></h2>
+    {{ singkat.target }}
+    <p class="text-muted">Total clicks: {{ singkat.total_clicks }}</p>
+    
+    <a href="{% url 'singkat:click' keyword=singkat.keyword %}">Proceed to link</a>
+</div>
+{% endblock %}

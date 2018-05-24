@@ -1,0 +1,35 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+
+{% block title_b %}Configure new Singkat URL{% endblock %}
+{% block body_b %}
+<div class="container">
+    <form class="form-center" action="{% url 'singkat:finalize-new' %}" method="POST">
+        <h3>Your keyword is available!</h3>
+        <p>just configure your new URL and begin sharing it!</p>
+        <!-- Form error should appear below this comment. -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-danger">Error(s) occured: {{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="singkat-id">Your chosen keyword</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">{{ request.get_host }}/</span>
+                </div>
+                <input name="singkat_keyword" type="text" value="{{ singkat.keyword }}" class="form-control" id="singkat-id" maxlength="100" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="target_title-id">Title of target HTML page</label>
+            <input name="target_html_title" type="text" value="{{ target_html_title }}" class="form-control" id="target_title-id">
+        </div>
+        <input type="hidden" name="target_url" value="{{ target_url }}">
+
+        <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+</div>
+{% endblock %}

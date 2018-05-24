@@ -1,0 +1,38 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+
+{% block title_b %}Register{% endblock %}
+{% block body_b %}
+<div class="container">
+    <form class="form-center" action="{% url 'singkat:register' %}" method="POST">
+        <h3>Register a new account</h3>
+        <p>Already have an account? <a href="{% url 'singkat:login' %}">Login</a></p>
+        <!-- Form error should appear below this comment. -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-danger">Error(s) occured: {{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name-id">Username</label>
+            <input name="username" type="text" class="form-control" id="name-id" placeholder="Enter your username" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="email-id">Email</label>
+            <input name="email" type="email" class="form-control" id="email-id" placeholder="Enter your email" required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email.</small>
+        </div>
+        <div class="form-group">
+            <label for="pass-id">Password</label>
+            <input name="password" type="password" class="form-control" id="pass-id" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <label for="pass2-id">Confirm Password</label>
+            <input name="password2" type="password" class="form-control" id="pass2-id" placeholder="Repeat Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button><br>
+        <small>By clicking Register, you have agreed to our terms.</small>
+    </form>
+</div>
+{% endblock %}

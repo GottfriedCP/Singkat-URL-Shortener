@@ -1,0 +1,10 @@
+body {
+    min-height: 100vh;
+}
+
+footer {
+    background-color: #EEEEEE;
+    min-height: 100px;
+    padding: 10px 50px;
+    margin-top: 20px;
+}

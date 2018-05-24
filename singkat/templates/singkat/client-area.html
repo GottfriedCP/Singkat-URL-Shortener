@@ -1,0 +1,47 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+
+{% block title_b %}Client Area{% endblock %}
+{% block body_b %}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <p class="text-info">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <div class="container" id="user-command-buttons">
+        <a href="{% url 'singkat:create-new' %}" class="btn btn-sm btn-primary" role="button">Create new singkat URL</a>
+    </div>
+    <div class="container">
+        <h2>Your Singkat URLs</h2>
+        {% if singkats.paginator.count > 0 %}
+            <div class="table-responsive pt-2">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Keyword</th>
+                            <th scope="col">Target URL</th>
+                            <th scope="col">Page Title</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for singkat in singkats %}
+                        <tr>
+                            <td><a href="{% url 'singkat:singkat-detail' keyword=singkat.keyword %}">{{ singkat.keyword }}</a></td>
+                            <td title="{{ singkat.target }}">{{ singkat.target|truncatechars:30 }}</td>
+                            <td title="{{ singkat.title }}">{{ singkat.title|truncatechars:30 }}</td>
+                            <td>{{ singkat.created_at|date:'d M Y, H:i' }}</td>
+                            <td>{{ singkat.total_clicks }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>You have not created any Singkat URL.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

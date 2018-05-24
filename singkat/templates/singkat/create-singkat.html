@@ -1,0 +1,35 @@
+{% extends "singkat/base.html" %}
+{% load staticfiles %}
+
+{% block title_b %}Create new Singkat URL{% endblock %}
+{% block body_b %}
+<div class="container">
+    <form class="form-center" action="{% url 'singkat:create-new' %}" method="POST">
+        <h3>Create new Singkat URL</h3>
+        <!-- Form error should appear below this comment. -->
+        {% if messages %}
+            <p class="text-danger">Error(s) occured: </p>
+            {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="ori-id">Target URL</label>
+            <input name="target_url" type="text" class="form-control" id="ori-id" placeholder="Paste long URL here" maxlength="1000" required autofocus>
+            <small id="ori_urlHelp" class="form-text text-muted">Please enter complete URL e.g. http://www.foo.dev/bar/foobar/</small>
+        </div>
+        <div class="form-group">
+            <label for="singkat-id">Unique keyword</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">{{ request.get_host }}/</span>
+                </div>
+                <input name="singkat_keyword" type="text" class="form-control" id="singkat-id" placeholder="YourSingkatKeyword" maxlength="100" required>
+            </div>
+            <small id="singkatHelp" class="form-text text-muted">Any invalid url characters will be removed</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+</div>
+{% endblock %}
