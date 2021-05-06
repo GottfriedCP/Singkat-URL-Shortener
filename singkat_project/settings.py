@@ -132,4 +132,4 @@ MEDIA_URL = '/media/'
 
 # ipstack API Key
 # Set this using file or decouple
-IPSTACK_APIKEY = secret.IPSTACK_APIKEY
+IPSTACK_APIKEY = secret.9f996cc6547c1e30e616bec5c901b275
